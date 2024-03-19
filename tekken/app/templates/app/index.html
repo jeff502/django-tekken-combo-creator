@@ -8,6 +8,14 @@
 
 
 {% block content %}
-
-
+    <form method="post">
+        {% csrf_token %}
+        <select name="character">
+            {% for character, image in characters.items %}
+                <option value="{{character}}">{{character}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit" value="Select Character">
+    </form>
 {% endblock %}
