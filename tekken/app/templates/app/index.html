@@ -8,14 +8,25 @@
 
 
 {% block content %}
+
     <form method="post">
         {% csrf_token %}
         <select name="character">
             {% for character, image in characters.items %}
-                <option value="{{character}}">{{character}}</option>
+                <option value="{{ character }}">{{ character }}</option>
             {% endfor %}
         </select>
         <br>
         <input type="submit" value="Select Character">
     </form>
+
+    <div id="move-buttons">
+        {% for move in moves %}
+            <button type="button" value="move">
+                <img src="{{ move }}" alt="Move Image">
+            </button>
+        {% endfor %}
+    </div>
+
+    
 {% endblock %}
