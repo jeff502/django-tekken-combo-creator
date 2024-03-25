@@ -21,6 +21,20 @@
         <input type="submit" value="Select Character">
     </form>
 
+    <!-- Change Button Display -->
+
+    <form method="post">
+        {% csrf_token %}
+        <select name="button_colors">
+            {% for bc in button_colors %}
+                <option value="{{ bc }}">{{ bc|title }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit" value="Change Button Color">
+    </form>
+
+
     <!-- Displaying Buttons -->
     <form method="POST" action="{% url 'index' %}">  <div id="move-buttons">
         {% csrf_token %}
@@ -36,7 +50,7 @@
 
     <!-- Render Session Character -->
     <div id="user-character">
-        {% if request.session.user_character %}
+        {% if request.session.user_character is not None %}
             <img src="{% static request.session.user_character %}" alt="Character Image">
         {%else%}
             <p>No character selected </p>
@@ -46,8 +60,8 @@
     <!-- Render Combo -->
     <div id="combo">
         {% if request.session.combo %}
-            {% for i in request.session.combo %}
-                <img src="{% static i %}" alt="{{ i }}">
+            {% for img in request.session.combo %}
+                <img src="{% static img %}" alt="{{ img }}">
             {% endfor %}
         {%else%}
             <p> error with combo </p>
@@ -57,9 +71,22 @@
      <!-- Clear Combo -->
     <form method="POST" action="{% url 'index' %}">  <div id="clear-combo">
         {% csrf_token %}
-        <button type="submit" value="clear">
+        <button type="submit" value="clear" name="combo-buttons">
             Clear Combo
         </button>
         <input type="hidden" name="clear" value="clear">
     </form>
+
+    <!-- Undo -->
+    {% if request.session.combo %}
+        <form method="post">
+        {% csrf_token %}
+        <button type="submit" value="undo" name="combo-buttons">
+            Undo
+        </button>
+        <input type="hidden" name="undo" value="undo">
+    </form>
+
+    {% endif %}
+
 {% endblock %}
