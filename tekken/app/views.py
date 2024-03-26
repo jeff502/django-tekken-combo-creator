@@ -1,9 +1,11 @@
-import glob
 import os
-from django.shortcuts import render, HttpResponseRedirect
+import io
+from django.shortcuts import render
 from django.views.generic import View
 from django.urls import reverse
 from django.shortcuts import redirect
+from PIL import Image
+from django.http import HttpResponse
 
 
 class IndexView(View):
@@ -52,7 +54,7 @@ class IndexView(View):
                     move_list = request.session.get("combo")
                     move_list.append(move)
                     request.session["combo"] = move_list
-
+                
         return redirect(reverse("index"), args=[self.context])
 
     def get_characters(self):
@@ -81,3 +83,56 @@ class IndexView(View):
         self.context["characters"] = self.characters
         self.context["buttons"] = self.buttons
         self.context["button_colors"] = ["default", "playstation", "xbox"]
+
+
+def merge_combo(combo_list, character=None):
+    # Characters and images 
+    static_path = "app\\static\\app\\"
+    image_list = []
+    if character:
+        character_path = static_path + character
+        image_list.append(character_path)
+        print(image_list)
+
+    for attack in combo_list:
+        image_list.append(f"{static_path}{attack}")
+    images = [Image.open(x) for x in image_list]
+    widths, heights = zip(*(i.size for i in images))
+
+    total_width = sum(widths)
+    max_height = max(heights)
+
+    new_im = Image.new('RGBA', (total_width, max_height))
+
+    x_offset = 0
+    for im in images:
+        new_im.paste(im, (x_offset,0))
+        x_offset += im.size[0]
+
+    return new_im
+ 
+
+def download_combo(request):
+    if request.method == "POST":
+        character = request.POST.get("user_character")
+        # print(character)
+        combo = request.POST.get("combo")
+        combo = eval(combo)
+        
+        if combo:
+            merged_combo = merge_combo(combo, character)
+            headers = {
+                    'Content-Type': 'image/png',
+                    'Content-Disposition': 'attachment; filename="test.png"'
+                }
+            response = HttpResponse(headers=headers)
+
+            with io.BytesIO() as output:
+                merged_combo.save(output, format="PNG")
+                image_data = output.getvalue()
+                response.write(image_data)
+                
+            return response
+
+                
+

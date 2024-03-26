@@ -89,4 +89,31 @@
 
     {% endif %}
 
+    
+    <!-- Save Combo  -->
+    {% if request.session.combo %}
+        <form method="post" action="{% url 'download-combo' %}">
+        {% csrf_token %}
+        <button type="submit" value="{{ request.session.combo }}" name="combo-buttons">
+            Download Combo
+        </button>
+        <input type="hidden" name="user_character" value="{{ request.session.user_character }}">
+        <input type="hidden" name="combo" value="{{ request.session.combo }}">
+    </form>
+    {% endif %}
+
+
+
+    <!-- Complete combo -->
+    {% if combo_picture %}
+        <img={{combo_picture}}>
+        <p>
+            should be working
+        </p>
+        
+    {% else %}
+        <p>test combo picture else</p>
+    {% endif %}
+
+
 {% endblock %}
