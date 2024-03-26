@@ -3,7 +3,7 @@
 
 
 {% block title %}
-
+    Combo Notation Creator
 {% endblock %}
 
 
@@ -21,6 +21,16 @@
         <input type="submit" value="Select Character">
     </form>
 
+    
+    <!-- Remove Character-->
+    {% if request.session.user_character %}
+    <form method="post" action="{% url "remove-character" %}">
+        {% csrf_token %}
+        <button type="submit" value={{ request.session.user_character }} name="remove">
+            Delete Character
+        </button>
+    </form>
+    {% endif %}
     <!-- Change Button Display -->
 
     <form method="post">
@@ -90,7 +100,7 @@
     {% endif %}
 
     
-    <!-- Save Combo  -->
+    <!-- Download Combo  -->
     {% if request.session.combo %}
         <form method="post" action="{% url 'download-combo' %}">
         {% csrf_token %}
@@ -100,19 +110,6 @@
         <input type="hidden" name="user_character" value="{{ request.session.user_character }}">
         <input type="hidden" name="combo" value="{{ request.session.combo }}">
     </form>
-    {% endif %}
-
-
-
-    <!-- Complete combo -->
-    {% if combo_picture %}
-        <img={{combo_picture}}>
-        <p>
-            should be working
-        </p>
-        
-    {% else %}
-        <p>test combo picture else</p>
     {% endif %}
 
 

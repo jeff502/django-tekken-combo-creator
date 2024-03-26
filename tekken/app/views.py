@@ -34,7 +34,7 @@ class IndexView(View):
             user_character = request.POST.get("character")
             if user_character:
                 request.session["user_character"] = user_character
-
+            
             clear_combo = request.POST.get("clear")
             if clear_combo:
                 request.session["combo"] = []
@@ -88,8 +88,9 @@ class IndexView(View):
 def merge_combo(combo_list, character=None):
     # Characters and images 
     static_path = "app\\static\\app\\"
+    print(character)
     image_list = []
-    if character:
+    if character.endswith("None") is False:
         character_path = static_path + character
         image_list.append(character_path)
         print(image_list)
@@ -136,3 +137,10 @@ def download_combo(request):
 
                 
 
+def remove_character(request):
+    print("cat")
+    if request.method == "POST":
+        if request.session["user_character"]:
+            request.session["user_character"] = None
+    print(request.session["user_character"], "cat")
+    return redirect(reverse("index"))
