@@ -26,8 +26,8 @@ class IndexView(View):
     def post(self, request, *args, **kwargs):
         if request.POST:
             button_color = request.POST.get("button_colors")
-            if button_color and button_color != request.session.get("button_type"):
-                request.session["button_type"] = button_color
+            if button_color and button_color != request.session.get("button_dir"):
+                request.session["button_dir"] = button_color
 
             user_character = request.POST.get("character")
             if user_character:
@@ -64,7 +64,7 @@ class IndexView(View):
         self.characters = characters
         
     def get_buttons(self, request):
-        image_dir = request.session.get("button_type")
+        image_dir = request.session.get("button_dir")
         button_path = self.static_path + image_dir
         buttons = []
         for filename in os.listdir(button_path):
@@ -75,7 +75,7 @@ class IndexView(View):
         self.buttons = buttons
 
     def get_context(self, request):
-        request.session["button_type"] = request.session.get("button_type", "default")
+        request.session["button_dir"] = request.session.get("button_dir", "default")
         self.get_buttons(request)
         self.get_characters()
         self.context["characters"] = self.characters
