@@ -11,7 +11,10 @@ from django.http import HttpResponse
 class IndexView(View):
     def __init__(self):
         self.characters = {}
-        self.buttons = []
+        self.attack_buttons = []
+        self.movement_buttons = []
+        self.general_buttons = []
+        self.stance_buttons = []
 
     template_name = 'app/index.html'
     static_path = "app\\static\\app\\"
@@ -65,8 +68,8 @@ class IndexView(View):
             characters[name] = f"characters\\{item}"
         self.characters = characters
         
-    def get_buttons(self, request):
-        image_dir = request.session.get("button_dir")
+    def get_attack_buttons(self, request):
+        image_dir = request.session.get("button_dir", "default")
         button_path = self.static_path + image_dir
         buttons = []
         for filename in os.listdir(button_path):
@@ -74,14 +77,32 @@ class IndexView(View):
                 image_url = f"{image_dir}\\{filename}"
                 buttons.append(image_url)
 
-        self.buttons = buttons
+        self.attack_buttons = buttons
+
+    def get_buttons(self):
+        image_dirs = {
+            "general": self.general_buttons,
+            "movement": self.movement_buttons,
+            "stances": self.stance_buttons
+        }
+        for image_dir, buttons in image_dirs.items():
+            button_path = self.static_path + image_dir
+            for filename in os.listdir(button_path):
+                if filename.endswith(('.jpg', '.jpeg', '.png')):
+                    image_url = f"{image_dir}\\{filename}"
+                    buttons.append(image_url)
+
 
     def get_context(self, request):
-        request.session["button_dir"] = request.session.get("button_dir", "default")
-        self.get_buttons(request)
+        self.get_attack_buttons(request)
+        self.get_buttons()
         self.get_characters()
+        request.session["stance_buttons"] = request.session.get("stance_buttons", False)
         self.context["characters"] = self.characters
-        self.context["buttons"] = self.buttons
+        self.context["attack_buttons"] = self.attack_buttons
+        self.context["movement_buttons"] = self.movement_buttons
+        self.context["general_buttons"] = self.general_buttons
+        self.context["stance_buttons"] = self.stance_buttons
         self.context["button_colors"] = ["default", "playstation", "xbox"]
 
 
@@ -116,7 +137,6 @@ def merge_combo(combo_list, character=None):
 def download_combo(request):
     if request.method == "POST":
         character = request.POST.get("user_character")
-        # print(character)
         combo = request.POST.get("combo")
         combo = eval(combo)
         
@@ -135,12 +155,17 @@ def download_combo(request):
                 
             return response
 
-                
 
 def remove_character(request):
-    print("cat")
     if request.method == "POST":
         if request.session["user_character"]:
             request.session["user_character"] = None
-    print(request.session["user_character"], "cat")
+
+    return redirect(reverse("index"))
+
+
+def toggle_stances(request):
+    if request.method == "POST":
+        request.session["stance_buttons"] = not request.session.get("stance_buttons")
+
     return redirect(reverse("index"))

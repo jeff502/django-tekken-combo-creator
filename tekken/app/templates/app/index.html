@@ -7,7 +7,7 @@
 {% endblock %}
 
 
-{% block content %}
+{% block header %}
 
     <!-- Select Character Drop Down -->
     <form method="post">
@@ -31,8 +31,8 @@
         </button>
     </form>
     {% endif %}
-    <!-- Change Button Display -->
 
+    <!-- Change Button Display -->
     <form method="post">
         {% csrf_token %}
         <select name="button_colors">
@@ -45,19 +45,72 @@
     </form>
 
 
-    <!-- Displaying Buttons -->
-    <form method="POST" action="{% url 'index' %}">  <div id="move-buttons">
+    <!-- Toggle Stances -->
+    <form method="post" action="{% url "toggle" %}">
         {% csrf_token %}
-    <div id="move-buttons">
-        {% for move in buttons %}
-            <button type="submit" value="{{ move }}" name="move-value">
-                <img src="{% static move %}" alt="Move Image">
-            </button>
-        {% endfor %}
-    </div>
+        <button type="submit" value={{ request.session.stance_buttons }} name="toggle">
+            Toggle {% if request.session.stance_buttons%}Off{%else%}On{% endif %}  Stance Buttons
+        </button>
+    </form>
+
+{% endblock %}
+
+{% block buttons %}
+    <!-- Displaying Attack Buttons -->
+    <form method="POST" action="{% url 'index' %}">  
+        {% csrf_token %}
+        <div id="attack-buttons">
+            {% for move in attack_buttons %}
+                <button type="submit" value="{{ move }}" name="move-value">
+                    <img src="{% static move %}" alt="Move Image">
+                </button>
+            {% endfor %}
+        </div>
     </form>
 
 
+        <!-- Displaying Movement Buttons -->
+    <form method="POST" action="{% url 'index' %}">  
+        {% csrf_token %}
+        <div id="movement-buttons">
+            {% for move in movement_buttons %}
+                <button type="submit" value="{{ move }}" name="move-value">
+                    <img src="{% static move %}" alt="Move Image">
+                </button>
+            {% endfor %}
+        </div>
+    </form>
+
+
+    <!-- Displaying General Buttons -->
+    <form method="POST" action="{% url 'index' %}">
+        {% csrf_token %}
+        <div id="general-buttons">
+            {% for move in general_buttons %}
+                <button type="submit" value="{{ move }}" name="move-value">
+                    <img src="{% static move %}" alt="Move Image">
+                </button>
+            {% endfor %}
+        </div>
+    </form>
+
+    <!-- Displaying Stance Buttons -->
+    {% if request.session.stance_buttons %}
+        <form method="POST" action="{% url 'index' %}">
+            {% csrf_token %}
+            <div id="movement-buttons">
+                {% for move in stance_buttons %}
+                    <button type="submit" value="{{ move }}" name="move-value">
+                        <img src="{% static move %}" alt="Move Image">
+                    </button>
+                {% endfor %}
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}
+
+
+{% block combo %}
     <!-- Render Session Character -->
     <div id="user-character">
         {% if request.session.user_character is not None %}
@@ -90,12 +143,12 @@
     <!-- Undo -->
     {% if request.session.combo %}
         <form method="post">
-        {% csrf_token %}
-        <button type="submit" value="undo" name="combo-buttons">
-            Undo
-        </button>
-        <input type="hidden" name="undo" value="undo">
-    </form>
+            {% csrf_token %}
+            <button type="submit" value="undo" name="combo-buttons">
+                Undo
+            </button>
+            <input type="hidden" name="undo" value="undo">
+        </form>
 
     {% endif %}
 
@@ -103,14 +156,12 @@
     <!-- Download Combo  -->
     {% if request.session.combo %}
         <form method="post" action="{% url 'download-combo' %}">
-        {% csrf_token %}
-        <button type="submit" value="{{ request.session.combo }}" name="combo-buttons">
-            Download Combo
-        </button>
-        <input type="hidden" name="user_character" value="{{ request.session.user_character }}">
-        <input type="hidden" name="combo" value="{{ request.session.combo }}">
-    </form>
+            {% csrf_token %}
+            <button type="submit" value="{{ request.session.combo }}" name="combo-buttons">
+                Download Combo
+            </button>
+            <input type="hidden" name="user_character" value="{{ request.session.user_character }}">
+            <input type="hidden" name="combo" value="{{ request.session.combo }}">
+        </form>
     {% endif %}
-
-
 {% endblock %}
