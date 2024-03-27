@@ -27,7 +27,7 @@
     <form method="post" action="{% url "remove-character" %}">
         {% csrf_token %}
         <button type="submit" value={{ request.session.user_character }} name="remove">
-            Delete Character
+            Clear Character
         </button>
     </form>
     {% endif %}
@@ -73,19 +73,19 @@
             {% for img in request.session.combo %}
                 <img src="{% static img %}" alt="{{ img }}">
             {% endfor %}
-        {%else%}
-            <p> error with combo </p>
         {% endif %}
     </div>
 
      <!-- Clear Combo -->
-    <form method="POST" action="{% url 'index' %}">  <div id="clear-combo">
-        {% csrf_token %}
-        <button type="submit" value="clear" name="combo-buttons">
-            Clear Combo
-        </button>
-        <input type="hidden" name="clear" value="clear">
-    </form>
+     {% if request.session.combo %}
+        <form method="POST" action="{% url 'index' %}">  <div id="clear-combo">
+            {% csrf_token %}
+            <button type="submit" value="clear" name="combo-buttons">
+                Clear Combo
+            </button>
+            <input type="hidden" name="clear" value="clear">
+        </form>
+    {% endif %}
 
     <!-- Undo -->
     {% if request.session.combo %}
