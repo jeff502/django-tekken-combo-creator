@@ -58,7 +58,7 @@ class IndexView(View):
                     move_list.append(move)
                     request.session["combo"] = move_list
                 
-        return redirect(reverse("index"), args=[self.context])
+        return redirect(reverse("index"))
 
     def get_characters(self):
         characters_path = self.static_path  + "characters"

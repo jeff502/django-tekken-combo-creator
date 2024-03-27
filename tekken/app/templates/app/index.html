@@ -9,6 +9,8 @@
 
 {% block header %}
 
+
+<div class=".button-group">
     <!-- Select Character Drop Down -->
     <form method="post">
         {% csrf_token %}
@@ -31,7 +33,9 @@
         </button>
     </form>
     {% endif %}
+</div>
 
+<div class=".button-group">
     <!-- Change Button Display -->
     <form method="post">
         {% csrf_token %}
@@ -52,10 +56,11 @@
             Toggle {% if request.session.stance_buttons%}Off{%else%}On{% endif %}  Stance Buttons
         </button>
     </form>
-
+</div>
 {% endblock %}
 
 {% block buttons %}
+<div class="button-container">
     <!-- Displaying Attack Buttons -->
     <form method="POST" action="{% url 'index' %}">  
         {% csrf_token %}
@@ -107,10 +112,14 @@
             </div>
         </form>
     {% endif %}
+
+</div>
 {% endblock %}
 
 
 {% block combo %}
+
+<div class="combo-container">
     <!-- Render Session Character -->
     <div id="user-character">
         {% if request.session.user_character is not None %}
@@ -128,7 +137,9 @@
             {% endfor %}
         {% endif %}
     </div>
+</div>
 
+<div class="combo-button-container">
      <!-- Clear Combo -->
      {% if request.session.combo %}
         <form method="POST" action="{% url 'index' %}">  <div id="clear-combo">
@@ -163,5 +174,6 @@
             <input type="hidden" name="user_character" value="{{ request.session.user_character }}">
             <input type="hidden" name="combo" value="{{ request.session.combo }}">
         </form>
-    {% endif %}
+        {% endif %}
+</div>
 {% endblock %}

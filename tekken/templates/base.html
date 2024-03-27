@@ -8,12 +8,18 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'app.css' %}">
     {% block css_files %}{% endblock %}
-    <header id="main-navigation">
-        <h1>Press the buttons below to create a combo. Download with the 'Download Button'</h1>
-        {% block header %}{% endblock %}
-    </header>   
 </head>
 <body>
+    <header id="main-navigation">
+       <h1>Create your own Tekken combos! Select your optional character and build your combo by clicking the buttons below.<br> Download your combo to share with others!</h1>
+
+        {% block header %}
+            <div class="button-group">
+                </div>
+            <div class="button-group">
+                </div>
+        {% endblock %}
+    </header>   
     {% block buttons %}
     {% endblock %}
 
