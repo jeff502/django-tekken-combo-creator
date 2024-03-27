@@ -9,8 +9,8 @@
 
 {% block header %}
 
-
-<div class=".button-group">
+<div class="button-group-container">
+<div class="button-group">
     <!-- Select Character Drop Down -->
     <form method="post">
         {% csrf_token %}
@@ -20,7 +20,7 @@
             {% endfor %}
         </select>
         <br>
-        <input type="submit" value="Select Character">
+        <input class="submit" type="submit" value="Select Character">
     </form>
 
     
@@ -35,7 +35,7 @@
     {% endif %}
 </div>
 
-<div class=".button-group">
+<div class="button-group">
     <!-- Change Button Display -->
     <form method="post">
         {% csrf_token %}
@@ -45,7 +45,7 @@
             {% endfor %}
         </select>
         <br>
-        <input type="submit" value="Change Button Color">
+        <input class="submit" type="submit" value="Change Button Color">
     </form>
 
 
@@ -56,6 +56,7 @@
             Toggle {% if request.session.stance_buttons%}Off{%else%}On{% endif %}  Stance Buttons
         </button>
     </form>
+</div>
 </div>
 {% endblock %}
 
@@ -124,8 +125,6 @@
     <div id="user-character">
         {% if request.session.user_character is not None %}
             <img src="{% static request.session.user_character %}" alt="Character Image">
-        {%else%}
-            <p>No character selected </p>
         {% endif %}
     </div>
     
@@ -135,6 +134,8 @@
             {% for img in request.session.combo %}
                 <img src="{% static img %}" alt="{{ img }}">
             {% endfor %}
+        {% else %}
+            <h2>No combo created yet! Build your combo using the buttons above.</h2>
         {% endif %}
     </div>
 </div>
@@ -174,6 +175,6 @@
             <input type="hidden" name="user_character" value="{{ request.session.user_character }}">
             <input type="hidden" name="combo" value="{{ request.session.combo }}">
         </form>
-        {% endif %}
+    {% endif %}
 </div>
 {% endblock %}

@@ -1,32 +1,83 @@
+/* Body Background Color */
+body {
+  background-color: #124559;
+  color: white; /* Set text color to white for readability */
+  font-family: Arial, sans-serif; /* Choose a readable font */
+  font-size: 0.8rem; /* Reduce overall font size slightly */
+}
+
+/* Main Navigation */
 #main-navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
+  display: flex; /* Reset to flex for horizontal layout */
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center; /* Center elements vertically */
+  align-items: center; /* Center elements horizontally */
 }
 
+/* Button Group Container */
+.button-group-container {
+  display: flex; /* Create container for centered button groups */
+  justify-content: center; /* Center button groups horizontally */
+  gap: 1.5rem; /* Reduce gap size slightly */
+}
+
+/* Button Group */
 .button-group {
-    display: flex;
-    flex-direction: column; /* Stack buttons vertically */
-    align-items: center; /* Center buttons horizontally */
-    gap: 0.5rem; /* Add some spacing between buttons */
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: center; /* Center buttons horizontally */
+  gap: 0.5rem; /* Add some spacing between buttons */
+  margin: 0.5rem; /* Add some margin for spacing */
 }
 
-
+/* Combo Container */
 .combo-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem; /* Add some spacing between elements */
-    padding: 2.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* Reduce gap size slightly */
+  padding: 2rem 1rem; /* Reduce padding slightly */
 }
 
-.button-container {
-    padding: 2.5rem 1rem; /* Padding top/bottom, left/right */
+/* Buttons & Dropdowns (excluding move buttons) */
+button:not([name="move-value"]),
+select {
+  background-color: #01161E; /* Set button background color */
+  color: white; /* Set button text color to white for readability */
+  border: none; /* Remove default button border */
+  padding: 0.5rem 1rem; /* Add button padding */
+  border-radius: 5px; /* Add some rounded corners */
+  cursor: pointer; /* Indicate clickable elements */
+  font-family: Arial, sans-serif; /* Choose a readable font */
 }
 
-.combo-button-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem; /* Add some spacing between elements */
-    padding: 2.5rem 1rem;
+/* Move Value Buttons (Transparent background) */
+button[name="move-value"] {
+  background-color: #124559; /* Match body background color */
+  color: white; /* Set button text color to white for readability */
+  border: none; /* Remove default button border */
+  padding: 0.5rem; /* Add button padding */
+  border-radius: 5px; /* Add some rounded corners */
+  cursor: pointer; /* Indicate clickable elements */
+  font-family: Arial, sans-serif; /* Choose a readable font */
+}
+
+/* Additional styling can be added here for specific buttons or dropdowns if needed */
+.character {
+  background-color: #124559; /* Set button background color */
+  color: white; /* Set button text color to white for readability */
+  border: none; /* Remove default button border */
+  padding: 0.5rem 1rem; /* Add button padding */
+  border-radius: 5px; /* Add some rounded corners */
+  cursor: pointer; /* Indicate clickable elements */
+  font-family: Arial, sans-serif; /* Choose a readable font */
+}
+
+.submit {
+  background-color: #01161E;
+  margin: 0.02rem;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
