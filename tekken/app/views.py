@@ -109,12 +109,10 @@ class IndexView(View):
 def merge_combo(combo_list, character=None):
     # Characters and images 
     static_path = "app\\static\\app\\"
-    print(character)
     image_list = []
-    if character.endswith("None") is False:
+    if character.endswith("None") is False and character is True:
         character_path = static_path + character
         image_list.append(character_path)
-        print(image_list)
 
     for attack in combo_list:
         image_list.append(f"{static_path}{attack}")
@@ -154,6 +152,7 @@ def download_combo(request):
                 response.write(image_data)
                 
             return response
+    return response
 
 
 def remove_character(request):
