@@ -110,7 +110,7 @@ def merge_combo(combo_list, character=None):
     # Characters and images 
     static_path = "app\\static\\app\\"
     image_list = []
-    if character.endswith("None") is False and character is True:
+    if character.endswith("None") is False and character is not None:
         character_path = static_path + character
         image_list.append(character_path)
 
@@ -142,7 +142,7 @@ def download_combo(request):
             merged_combo = merge_combo(combo, character)
             headers = {
                     'Content-Type': 'image/png',
-                    'Content-Disposition': 'attachment; filename="test.png"'
+                    'Content-Disposition': 'attachment; filename="combo.png"'
                 }
             response = HttpResponse(headers=headers)
 

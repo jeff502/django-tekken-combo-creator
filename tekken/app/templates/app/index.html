@@ -8,57 +8,57 @@
 
 
 {% block header %}
-
 <div class="button-group-container">
-<div class="button-group">
-    <!-- Select Character Drop Down -->
-    <form method="post">
-        {% csrf_token %}
-        <select name="character">
-            {% for character, image in characters.items %}
-                <option value="{{ image }}">{{ character }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <input class="submit" type="submit" value="Select Character">
-    </form>
+    <div class="button-group">
+        <!-- Select Character Drop Down -->
+        <form method="post">
+            {% csrf_token %}
+            <select name="character">
+                {% for character, image in characters.items %}
+                    <option value="{{ image }}">{{ character }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <input class="submit" type="submit" value="Select Character">
+        </form>
 
-    
-    <!-- Remove Character-->
-    {% if request.session.user_character %}
-    <form method="post" action="{% url "remove-character" %}">
-        {% csrf_token %}
-        <button type="submit" value={{ request.session.user_character }} name="remove">
-            Clear Character
-        </button>
-    </form>
-    {% endif %}
-</div>
+        
+        <!-- Remove Character-->
+        {% if request.session.user_character %}
+        <form method="post" action="{% url "remove-character" %}">
+            {% csrf_token %}
+            <button type="submit" value={{ request.session.user_character }} name="remove">
+                Clear Character
+            </button>
+        </form>
+        {% endif %}
+    </div>
 
-<div class="button-group">
-    <!-- Change Button Display -->
-    <form method="post">
-        {% csrf_token %}
-        <select name="button_colors">
-            {% for bc in button_colors %}
-                <option value="{{ bc }}">{{ bc|title }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <input class="submit" type="submit" value="Change Button Color">
-    </form>
+    <div class="button-group">
+        <!-- Change Button Display -->
+        <form method="post">
+            {% csrf_token %}
+            <select name="button_colors">
+                {% for bc in button_colors %}
+                    <option value="{{ bc }}">{{ bc|title }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <input class="submit" type="submit" value="Change Button Color">
+        </form>
 
 
-    <!-- Toggle Stances -->
-    <form method="post" action="{% url "toggle" %}">
-        {% csrf_token %}
-        <button type="submit" value={{ request.session.stance_buttons }} name="toggle">
-            Toggle {% if request.session.stance_buttons%}Off{%else%}On{% endif %}  Stance Buttons
-        </button>
-    </form>
-</div>
+        <!-- Toggle Stances -->
+        <form method="post" action="{% url "toggle" %}">
+            {% csrf_token %}
+            <button type="submit" value={{ request.session.stance_buttons }} name="toggle">
+                Toggle {% if request.session.stance_buttons%}Off{%else%}On{% endif %}  Stance Buttons
+            </button>
+        </form>
+    </div>
 </div>
 {% endblock %}
+
 
 {% block buttons %}
 <div class="button-container">
