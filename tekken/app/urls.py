@@ -7,5 +7,4 @@ urlpatterns = [
     path("download/", views.download_combo, name="download-combo"),
     path("remove", views.remove_character, name="remove-character"),
     path("toggle", views.toggle_stances, name="toggle"),
-    
 ]
