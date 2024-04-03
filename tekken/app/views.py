@@ -35,7 +35,7 @@ class IndexView(View):
 
         if request.POST.get("move-value"):
             move = request.POST.get("move-value")
-            if len(request.session.get("combo")) >= 50:
+            if len(request.session.get("combo", [])) >= 50:
                 request.session["max"] = True
             else:
                 if not request.session.get("combo"):
