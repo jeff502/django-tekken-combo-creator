@@ -1,0 +1,83 @@
+/* Body Background Color */
+body {
+  background-color: #124559;
+  color: white; 
+  font-family: Arial, sans-serif; 
+  font-size: 0.8rem; 
+}
+
+/* Main Navigation */
+#main-navigation {
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center;
+}
+
+/* Button Group Container */
+.button-group-container {
+  display: flex; 
+  justify-content: center; 
+  gap: 1.5rem;
+}
+
+/* Button Group */
+.button-group {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  gap: 0.5rem; 
+  margin: 0.5rem; 
+}
+
+/* Combo Container */
+.combo-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; 
+  padding: 2rem 1rem; 
+}
+
+/* Buttons & Dropdowns (excluding move buttons) */
+button:not([name="move-value"]),
+select {
+  background-color: #01161E; 
+  color: white; 
+  border: none; 
+  padding: 0.5rem 1rem; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  font-family: Arial, sans-serif; 
+}
+
+/* Move Value Buttons (Transparent background) */
+button[name="move-value"] {
+  background-color: #124559; 
+  color: white; 
+  border: none; 
+  padding: 0.5rem; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  font-family: Arial, sans-serif; 
+}
+
+/* Additional styling can be added here for specific buttons or dropdowns if needed */
+.character {
+  background-color: #124559; 
+  color: white; 
+  border: none; 
+  padding: 0.5rem 1rem; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  font-family: Arial, sans-serif; 
+}
+
+.submit {
+  background-color: #01161E;
+  margin: 0.02rem;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
