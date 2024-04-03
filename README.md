@@ -52,4 +52,4 @@ This will typically launch the server at http://127.0.0.1:8000/ in your web brow
 
 # Acknowledgments
 
-  All image assets are were forked from `LolJohn11`'s github repo: `https://github.com/LolJohn11/NotationImageGenerator/tree/main`
+  All image assets are were forked from `LolJohn11`'s github repo: https://github.com/LolJohn11/NotationImageGenerator/tree/main
