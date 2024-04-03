@@ -21,36 +21,25 @@ class IndexView(View):
     context = {}
 
     
-
     def get(self, request, *args, **kwargs):
         self.get_context(request)
-
         return render(request, self.template_name, self.context)
     
 
     def post(self, request, *args, **kwargs):
         if request.POST:
-            button_color = request.POST.get("button_colors")
-            if button_color and button_color != request.session.get("button_dir"):
-                request.session["button_dir"] = button_color
+            self.handle_post_request(request)
+        return redirect(reverse("index"))
 
-            user_character = request.POST.get("character")
-            if user_character:
-                request.session["user_character"] = user_character
-            
-            clear_combo = request.POST.get("clear")
-            if clear_combo:
-                request.session["combo"] = []
+    def handle_post_request(self, request):
+        if request.POST.get("button_colors"):
+            request.session["button_dir"] = request.POST.get("button_colors")
 
-            undo = request.POST.get("undo")
-            if undo:
-                move_list = request.session.get("combo")
-                if move_list:
-                    move_list.pop()
-                request.session["combo"] = move_list
-
+        if request.POST.get("move-value"):
             move = request.POST.get("move-value")
-            if move:
+            if len(request.session.get("combo")) >= 50:
+                request.session["max"] = True
+            else:
                 if not request.session.get("combo"):
                     request.session["combo"] = [move]
                 else:
@@ -58,7 +47,22 @@ class IndexView(View):
                     move_list.append(move)
                     request.session["combo"] = move_list
                 
+        if request.POST.get("character"):
+                request.session["user_character"] = request.POST.get("character")
+
+        if request.POST.get("clear"):
+            request.session["combo"] = []
+
+        if request.POST.get("undo"):
+            move_list = request.session.get("combo", [])
+            if move_list:
+                move_list.pop()
+        
+            request.session["combo"] = move_list
+
         return redirect(reverse("index"))
+        
+
 
     def get_characters(self):
         characters_path = self.static_path  + "characters"
@@ -104,6 +108,7 @@ class IndexView(View):
         self.context["general_buttons"] = self.general_buttons
         self.context["stance_buttons"] = self.stance_buttons
         self.context["button_colors"] = ["default", "playstation", "xbox"]
+        request.session["max"] = len(request.session.get("combo", [])) >= 50
 
 
 def merge_combo(combo_list, character=None):

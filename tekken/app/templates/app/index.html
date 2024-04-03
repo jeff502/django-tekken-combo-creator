@@ -137,6 +137,10 @@
         {% else %}
             <h2>No combo created yet! Build your combo using the buttons above.</h2>
         {% endif %}
+
+        {% if request.session.max %}
+            <p>Your combo is at the current maximum length. </p>
+        {% endif %}
     </div>
 </div>
 
